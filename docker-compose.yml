@@ -2,8 +2,7 @@ version: '3'
 
 services:
   web:
-    build: .
-    image: anish/fileprocessor:v1
+    image: amanandhardocker04/fileprocessor:v1
     container_name: file-processor-web
     restart: unless-stopped
     networks:

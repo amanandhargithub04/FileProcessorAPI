@@ -73,10 +73,6 @@ public class CSVProcessorService implements TransactionProcessor {
         if (!isTransactionRowNullOrEmpty(transactionRow, 1)) { //<--amount
             transaction.setAmount(BigDecimal.valueOf(Double.valueOf(transactionRow[1])));
         }
-//        } else {
-//            //TODO work around this way of setting 0 explicitly
-//            transaction.setAmount(new BigDecimal(0));
-//        }
     }
 
     private void populateType(Transaction transaction, String[] transactionRow) {

@@ -1,5 +1,6 @@
 package com.processor.fileprocessor.integrationTests;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.processor.fileprocessor.testHelper.FileProcessorTestHelper;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -11,6 +12,8 @@ import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.result.MockMvcResultHandlers;
+
+import java.io.IOException;
 
 import static com.processor.fileprocessor.testHelper.ProcessorTestConstants.REQUEST_PARAM_NAME;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.multipart;
@@ -33,14 +36,14 @@ public class FileProcessorIntegrationTest {
 
     @Test
     public void testMultipleFileProcessBackToBackWithMockMVC() throws Exception {
-        MockMultipartFile mockMultipartFileCSV1 = helper.getMockMultiPartFile(REQUEST_PARAM_NAME, "test_csv2.csv", "text/csv", "D:/test_csv2.csv");
+        MockMultipartFile mockMultipartFileCSV1 = helper.getMockMultiPartFile(REQUEST_PARAM_NAME, "test_csv_not_balanced_with_violation.csv", "text/csv", "test_csv_not_balanced_with_violation.csv");
         mockMvc.perform(multipart("/processFile/CSVFile").file(mockMultipartFileCSV1))
                 .andExpect(content().contentType("application/json"))
                 .andExpect(content().json(helper.getExpectedJsonContentString_NotBalanced()))
                 .andExpect(status().isOk())
                 .andDo(MockMvcResultHandlers.print());
 
-        MockMultipartFile mockMultipartFileXML = helper.getMockMultiPartFile(REQUEST_PARAM_NAME, "testXml2.xml", "text/xml", "D:/testXml2.xml");
+        MockMultipartFile mockMultipartFileXML = helper.getMockMultiPartFile(REQUEST_PARAM_NAME, "test_xml_not_balanced_with_violation.xml", "text/xml", "test_xml_not_balanced_with_violation.xml");
 
         mockMvc.perform(multipart("/processFile/XMLFile").file(mockMultipartFileXML))
                 .andExpect(content().contentType("application/json"))
@@ -48,7 +51,17 @@ public class FileProcessorIntegrationTest {
                 .andExpect(status().isOk())
                 .andDo(MockMvcResultHandlers.print());
 
-        MockMultipartFile mockMultipartFileCSV2 = helper.getMockMultiPartFile(REQUEST_PARAM_NAME, "test_csv3.csv", "text/csv", "D:/test_csv3.csv");
+        MockMultipartFile mockMultipartFileCSV2 = helper.getMockMultiPartFile(REQUEST_PARAM_NAME, "test_csv_balanced_no_violation.csv", "text/csv", "test_csv_balanced_no_violation.csv");
+        mockMvc.perform(multipart("/processFile/CSVFile").file(mockMultipartFileCSV2))
+                .andExpect(content().contentType("application/json"))
+                .andExpect(content().json(helper.getExpectedJsonContentString_Balanced()))
+                .andExpect(status().isOk())
+                .andDo(MockMvcResultHandlers.print());
+    }
+
+    @Test
+    public void testCSVFileProcessWithMockMVC() throws Exception {
+        MockMultipartFile mockMultipartFileCSV2 = helper.getMockMultiPartFile(REQUEST_PARAM_NAME, "test_csv_balanced_no_violation.csv", "text/csv", "test_csv_balanced_no_violation.csv");
         mockMvc.perform(multipart("/processFile/CSVFile").file(mockMultipartFileCSV2))
                 .andExpect(content().contentType("application/json"))
                 .andExpect(content().json(helper.getExpectedJsonContentString_Balanced()))
@@ -58,7 +71,7 @@ public class FileProcessorIntegrationTest {
 
     @Test
     public void testXMLFileProcessWithMockMVC() throws Exception {
-        MockMultipartFile mockMultipartFile = helper.getMockMultiPartFile(REQUEST_PARAM_NAME, "testXml2.xml", "text/xml", "D:/testXml2.xml");
+        MockMultipartFile mockMultipartFile = helper.getMockMultiPartFile(REQUEST_PARAM_NAME, "test_xml_not_balanced_with_violation.xml", "text/xml", "test_xml_not_balanced_with_violation.xml");
 
         mockMvc.perform(multipart("/processFile/XMLFile").file(mockMultipartFile))
                 .andExpect(content().contentType("application/json"))

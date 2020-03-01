@@ -40,7 +40,7 @@ public class FileProcessorControllerTest {
 
     @Test
     public void processCSVFileAndReturnProcessedDetailsTest() throws Exception {
-        MockMultipartFile mockMultipartFile = helper.getMockMultiPartFile(REQUEST_PARAM_NAME, "test_csv2.csv", "text/csv", "D:/test_csv2.csv");
+        MockMultipartFile mockMultipartFile = helper.getMockMultiPartFile(REQUEST_PARAM_NAME, "test_csv_not_balanced_with_violation.csv", "text/csv", "test_csv_not_balanced_with_violation.csv");
         given(service.processAndReturnDetails(mockMultipartFile, FileType.CSV)).willReturn(helper.mockProcessedDetails_NotBalanced());
 
         mockMvc.perform(multipart("/processFile/CSVFile").file(mockMultipartFile))
@@ -52,7 +52,7 @@ public class FileProcessorControllerTest {
 
     @Test
     public void processXMLFileAndReturnProcessedDetailsTest() throws Exception {
-        MockMultipartFile mockMultipartFile = helper.getMockMultiPartFile(REQUEST_PARAM_NAME, "testXml2.xml", "text/xml","D:/testXml2.xml");
+        MockMultipartFile mockMultipartFile = helper.getMockMultiPartFile(REQUEST_PARAM_NAME, "test_xml_not_balanced_with_violation.xml", "text/xml","test_xml_not_balanced_with_violation.xml");
         given(service.processAndReturnDetails(mockMultipartFile, FileType.XML)).willReturn(helper.mockProcessedDetails_NotBalanced());
 
 

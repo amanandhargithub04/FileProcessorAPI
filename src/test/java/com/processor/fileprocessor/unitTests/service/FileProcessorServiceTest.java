@@ -69,7 +69,7 @@ public class FileProcessorServiceTest {
         Mockito.when(csvProcessorService.validate()).thenReturn(mockViolationList);
         Mockito.when(csvProcessorService.isBalanced()).thenReturn(false);
 
-        MockMultipartFile multipartFile = helper.getMockMultiPartFile(REQUEST_PARAM_NAME, "test_csv2.csv", "text/csv", "D:/test_csv2.csv");
+        MockMultipartFile multipartFile = helper.getMockMultiPartFile(REQUEST_PARAM_NAME, "test_csv_not_balanced_with_violation.csv", "text/csv", "test_csv_not_balanced_with_violation.csv");
         ProcessedDetails actualProcessedDetails = fileProcessorService.processAndReturnDetails(multipartFile, FileType.CSV);
 
         Assert.assertNotNull(actualProcessedDetails);
@@ -88,7 +88,7 @@ public class FileProcessorServiceTest {
         Mockito.when(xmlProcessorService.validate()).thenReturn(mockViolationList);
         Mockito.when(xmlProcessorService.isBalanced()).thenReturn(false);
 
-        MockMultipartFile multipartFile = helper.getMockMultiPartFile(REQUEST_PARAM_NAME, "testXml2.xml", "text/xml","D:/testXml2.xml");
+        MockMultipartFile multipartFile = helper.getMockMultiPartFile(REQUEST_PARAM_NAME, "test_xml_not_balanced_with_violation.xml", "text/xml","test_xml_not_balanced_with_violation.xml");
         ProcessedDetails actualProcessedDetails = fileProcessorService.processAndReturnDetails(multipartFile, FileType.XML);
 
         Assert.assertNotNull(actualProcessedDetails);

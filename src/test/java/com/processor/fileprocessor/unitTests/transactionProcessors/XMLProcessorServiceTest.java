@@ -50,7 +50,7 @@ public class XMLProcessorServiceTest {
 
     @Test
     public void verify_OnCallingImportTransactionsMehtod_NoInteractionWith_BalanceCheckerService_ValidatorService() throws IOException {
-        MockMultipartFile mockMultipartFile = helper.getMockMultiPartFile(REQUEST_PARAM_NAME, "testXml2.xml", "text/xml","D:/testXml2.xml");;
+        MockMultipartFile mockMultipartFile = helper.getMockMultiPartFile(REQUEST_PARAM_NAME, "test_xml_not_balanced_with_violation.xml", "text/xml","test_xml_not_balanced_with_violation.xml");;
         xmlProcessorService.importTransactions(mockMultipartFile.getInputStream());
 
         Assert.assertNotNull(xmlProcessorService.getImportedTransactions());
@@ -60,7 +60,7 @@ public class XMLProcessorServiceTest {
 
     @Test
     public void verify_CallingValidateMethod_Interacts_OnceWithBalanceCheckerService_NoneWithValidatorService() throws IOException {
-        MockMultipartFile mockMultipartFile = helper.getMockMultiPartFile(REQUEST_PARAM_NAME, "testXml2.xml", "text/xml","D:/testXml2.xml");;
+        MockMultipartFile mockMultipartFile = helper.getMockMultiPartFile(REQUEST_PARAM_NAME, "test_xml_not_balanced_with_violation.xml", "text/xml","test_xml_not_balanced_with_violation.xml");;
         xmlProcessorService.importTransactions(mockMultipartFile.getInputStream());
         xmlProcessorService.validate();
 
@@ -70,7 +70,7 @@ public class XMLProcessorServiceTest {
 
     @Test
     public void callingIsBalancedMethod_Interacts_OnceWithBalanceCheckerService_NoneWithValidatorService() throws IOException {
-        MockMultipartFile mockMultipartFile = helper.getMockMultiPartFile(REQUEST_PARAM_NAME, "testXml2.xml", "text/xml","D:/testXml2.xml");;
+        MockMultipartFile mockMultipartFile = helper.getMockMultiPartFile(REQUEST_PARAM_NAME, "test_xml_not_balanced_with_violation.xml", "text/xml","test_xml_not_balanced_with_violation.xml");;
         xmlProcessorService.importTransactions(mockMultipartFile.getInputStream());
         xmlProcessorService.isBalanced();
 
@@ -80,7 +80,7 @@ public class XMLProcessorServiceTest {
 
     @Test
     public void verifyServiceInteractionWithExactArgument() throws IOException {
-        MockMultipartFile mockMultipartFile = helper.getMockMultiPartFile(REQUEST_PARAM_NAME, "testXml2.xml", "text/xml","D:/testXml2.xml");;
+        MockMultipartFile mockMultipartFile = helper.getMockMultiPartFile(REQUEST_PARAM_NAME, "test_xml_not_balanced_with_violation.xml", "text/xml","test_xml_not_balanced_with_violation.xml");;
         xmlProcessorService.importTransactions(mockMultipartFile.getInputStream());
         xmlProcessorService.isBalanced();
         xmlProcessorService.validate();

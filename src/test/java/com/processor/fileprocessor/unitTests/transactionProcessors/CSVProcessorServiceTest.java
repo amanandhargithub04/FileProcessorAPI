@@ -50,7 +50,7 @@ public class CSVProcessorServiceTest {
 
     @Test
     public void verify_OnCallingImportTransactionsMehtod_NoInteractionWith_BalanceCheckerService_ValidatorService() throws IOException {
-        MockMultipartFile mockMultipartFile = helper.getMockMultiPartFile(REQUEST_PARAM_NAME, "test_csv2.csv", "text/csv", "D:/test_csv2.csv");
+        MockMultipartFile mockMultipartFile = helper.getMockMultiPartFile(REQUEST_PARAM_NAME, "test_csv_not_balanced_with_violation.csv", "text/csv", "test_csv_not_balanced_with_violation.csv");
         csvProcessorService.importTransactions(mockMultipartFile.getInputStream());
 
         Assert.assertNotNull(csvProcessorService.getImportedTransactions());
@@ -60,7 +60,7 @@ public class CSVProcessorServiceTest {
 
     @Test
     public void verify_CallingValidateMethod_Interacts_OnceWithBalanceCheckerService_NoneWithValidatorService() throws IOException {
-        MockMultipartFile mockMultipartFile = helper.getMockMultiPartFile(REQUEST_PARAM_NAME, "test_csv2.csv", "text/csv", "D:/test_csv2.csv");
+        MockMultipartFile mockMultipartFile = helper.getMockMultiPartFile(REQUEST_PARAM_NAME, "test_csv_not_balanced_with_violation.csv", "text/csv", "test_csv_not_balanced_with_violation.csv");
         csvProcessorService.importTransactions(mockMultipartFile.getInputStream());
         csvProcessorService.validate();
 
@@ -70,7 +70,7 @@ public class CSVProcessorServiceTest {
 
     @Test
     public void callingIsBalancedMethod_Interacts_OnceWithBalanceCheckerService_NoneWithValidatorService() throws IOException {
-        MockMultipartFile mockMultipartFile = helper.getMockMultiPartFile(REQUEST_PARAM_NAME, "test_csv2.csv", "text/csv", "D:/test_csv2.csv");
+        MockMultipartFile mockMultipartFile = helper.getMockMultiPartFile(REQUEST_PARAM_NAME, "test_csv_not_balanced_with_violation.csv", "text/csv", "test_csv_not_balanced_with_violation.csv");
         csvProcessorService.importTransactions(mockMultipartFile.getInputStream());
         csvProcessorService.isBalanced();
 
@@ -80,7 +80,7 @@ public class CSVProcessorServiceTest {
 
     @Test
     public void verifyServiceInteractionWithExactArgument() throws IOException {
-        MockMultipartFile mockMultipartFile = helper.getMockMultiPartFile(REQUEST_PARAM_NAME, "test_csv2.csv", "text/csv", "D:/test_csv2.csv");
+        MockMultipartFile mockMultipartFile = helper.getMockMultiPartFile(REQUEST_PARAM_NAME, "test_csv_not_balanced_with_violation.csv", "text/csv", "test_csv_not_balanced_with_violation.csv");
         csvProcessorService.importTransactions(mockMultipartFile.getInputStream());
         csvProcessorService.isBalanced();
         csvProcessorService.validate();

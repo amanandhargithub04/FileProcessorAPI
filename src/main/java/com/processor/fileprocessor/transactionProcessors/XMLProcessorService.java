@@ -7,7 +7,9 @@ import com.processor.fileprocessor.dto.Violation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.config.ConfigurableBeanFactory;
 import org.springframework.context.annotation.Scope;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 import javax.xml.namespace.QName;
 import javax.xml.stream.XMLEventReader;
@@ -42,16 +44,15 @@ public class XMLProcessorService implements TransactionProcessor {
                     if (startElement.getName().getLocalPart().equalsIgnoreCase("Transaction")) {
                         Transaction transaction = new Transaction();
                         populateType(startElement, transaction);
-                        //TODO refactor this, also is it really necessary to check if the amount/type/narration field is missing i.e. <Transaction type='C' narration='test' />
                         populateAmount(startElement, transaction);
                         populateNarration(startElement, transaction);
                         this.transactionList.add(transaction);
                     }
                 }
             }
-
         } catch (Exception e) {
-            e.printStackTrace();
+            throw new ResponseStatusException(
+                    HttpStatus.INTERNAL_SERVER_ERROR, "Unable to Parse XML file", e);
         }
     }
 

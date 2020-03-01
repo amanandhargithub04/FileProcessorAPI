@@ -7,7 +7,9 @@ import com.processor.fileprocessor.dto.Violation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.config.ConfigurableBeanFactory;
 import org.springframework.context.annotation.Scope;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.io.BufferedReader;
 import java.io.InputStream;
@@ -35,8 +37,8 @@ public class CSVProcessorService implements TransactionProcessor {
         try (BufferedReader br = new BufferedReader(new InputStreamReader(inputStream))) {
             this.transactionList = br.lines().skip(1).map(mapToTransactionList).collect(Collectors.toList());
         } catch (Exception e) {
-            //TODO add proper logger
-            e.printStackTrace();
+            throw new ResponseStatusException(
+                    HttpStatus.INTERNAL_SERVER_ERROR, "Unable to Parse CSV file", e);
         }
     }
 

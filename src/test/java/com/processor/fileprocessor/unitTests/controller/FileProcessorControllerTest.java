@@ -55,7 +55,6 @@ public class FileProcessorControllerTest {
         MockMultipartFile mockMultipartFile = helper.getMockMultiPartFile(REQUEST_PARAM_NAME, "test_xml_not_balanced_with_violation.xml", "text/xml","test_xml_not_balanced_with_violation.xml");
         given(service.processAndReturnDetails(mockMultipartFile, FileType.XML)).willReturn(helper.mockProcessedDetails_NotBalanced());
 
-
         mockMvc.perform(multipart("/processFile/XMLFile").file(mockMultipartFile))
                 .andExpect(content().contentType("application/json"))
                 .andExpect(content().json(helper.getExpectedJsonContentString_NotBalanced()))

@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.io.IOException;
 
@@ -21,22 +22,20 @@ public class FileProcessorController {
     private FileProcessorService fileProcessor;
 
     @RequestMapping(value = "/CSVFile", method = RequestMethod.POST)
-    public ResponseEntity<ProcessedDetails> processCSVFile(@RequestParam("file") MultipartFile file) throws IOException {
-        return new ResponseEntity<>(fileProcessor.processAndReturnDetails(file, FileType.CSV), HttpStatus.OK);
+    public ResponseEntity<ProcessedDetails> processCSVFile(@RequestParam("file") MultipartFile file) {
+        try {
+            return new ResponseEntity<>(fileProcessor.processAndReturnDetails(file, FileType.CSV), HttpStatus.OK);
+        } catch (RuntimeException e) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Error While Processing CSV File", e);
+        }
     }
 
     @RequestMapping(value = "/XMLFile", method = RequestMethod.POST)
-    public ResponseEntity<ProcessedDetails> processXMLFile(@RequestParam("file") MultipartFile file) throws IOException {
-        return new ResponseEntity<>(fileProcessor.processAndReturnDetails(file, FileType.XML), HttpStatus.OK);
+    public ResponseEntity<ProcessedDetails> processXMLFile(@RequestParam("file") MultipartFile file) {
+        try {
+            return new ResponseEntity<>(fileProcessor.processAndReturnDetails(file, FileType.XML), HttpStatus.OK);
+        } catch (RuntimeException e) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Error While Processing XML File", e);
+        }
     }
-
-    //TODO
-    // test coverage with unitTests testing,
-    // proper error handling, @ExceptionHandler
-    // proper logging,
-    // try to refactor looping of transactionList, i.e. loop runs for validation and summing and population after import, try to accomplish them at once and see performance
-    // Store error message of Violation in Constants
-    // Consider integrationTests testing in a scenario that multiple requests hit the same end point
-
-
 }

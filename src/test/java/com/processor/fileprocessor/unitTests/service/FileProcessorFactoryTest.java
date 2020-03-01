@@ -18,6 +18,7 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.web.server.ResponseStatusException;
 
 @RunWith(SpringRunner.class)
 public class FileProcessorFactoryTest {
@@ -66,7 +67,7 @@ public class FileProcessorFactoryTest {
 
     @Test
     public void testThatTryingToCreateOtherFileThrowsException(){
-        exceptionRule.expect(UnsupportedOperationException.class);
+        exceptionRule.expect(ResponseStatusException.class);
         exceptionRule.expectMessage("Unsupported File Type!");
         factory.createFileProcessor(FileType.EXCEL);
     }

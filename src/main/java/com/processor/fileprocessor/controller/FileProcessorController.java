@@ -34,7 +34,6 @@ public class FileProcessorController {
     // test coverage with unitTests testing,
     // proper error handling, @ExceptionHandler
     // proper logging,
-    // refactor multiple lines to @Component based classes, refactor Integration tests
     // try to refactor looping of transactionList, i.e. loop runs for validation and summing and population after import, try to accomplish them at once and see performance
     // Store error message of Violation in Constants
     // Consider integrationTests testing in a scenario that multiple requests hit the same end point

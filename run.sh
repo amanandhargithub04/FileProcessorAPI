@@ -1,4 +1,5 @@
 #!/bin/bash
+mvn package
 docker stop file-processor-web
 docker rm file-processor-web
 docker rmi anish/fileprocessor:v1
